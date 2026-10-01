@@ -2,7 +2,7 @@
 
 ## Reporting a vulnerability
 
-Email **janzeeer@proton.me** with a description and, if possible, a minimal reproduction. Please do not open a public
+Email **security@janzeer.org** with a description and, if possible, a minimal reproduction. Please do not open a public
 issue for anything that could affect users' funds. We acknowledge reports within 3 working days.
 
 ## What this SDK does and does not do
