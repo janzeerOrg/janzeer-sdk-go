@@ -1,0 +1,18 @@
+{
+  "description": "Encrypted-mnemonic vault interop fixture. Decrypting `blob` with `password` must yield `secret`; `wrongPassword` must fail (GCM tag). Format v1: PBKDF2-HMAC-SHA256 250000 iterations over the password with `salt` (16 B) -> AES-256-GCM key; `iv` 12 B; `ct` = ciphertext||16-byte tag; all base64. Encryption is randomized, so only decryption is vector-tested.",
+  "kdf": {
+    "name": "PBKDF2-HMAC-SHA256",
+    "iterations": 250000,
+    "keyBytes": 32
+  },
+  "cipher": "AES-256-GCM",
+  "password": "correct horse battery staple",
+  "wrongPassword": "hunter2",
+  "secret": "abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about",
+  "blob": {
+    "v": 1,
+    "salt": "GSeGQ3f/Oe8hp7MCDOJmXQ==",
+    "iv": "QnEBHzlChn3UAExX",
+    "ct": "keXBGWbgen3eUY7WsBtUJetxnxVZxTsWJiy15GpkKl3d230+PpC1dmXrbO2MMMmeTbgwknn7Os3YE408g8shk362Pvsud6RiGFTJonuo+qJxibSXXlfM10lRdMv5dk/WD7+p9y3hs7BmWtErJQ=="
+  }
+}
