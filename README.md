@@ -93,7 +93,7 @@ Go 1.26 or newer (the two latest Go releases are tested).
 
 | SDK | Node | REST envelope `version` | Wire protocol | Vectors |
 |---|---|---|---|---|
-| 0.1.x | 0.1.1 | 1.1.0 | 3.4.0 | v2 |
+| 0.1.x | 0.1.2 | 1.1.0 | 3.4.0 | v2 |
 
 The `Spec…` constants export these values; the e2e test checks them against the node on the first call.
 
