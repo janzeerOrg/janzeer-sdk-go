@@ -1,0 +1,32 @@
+name: Bug report
+description: Something in the SDK does not behave as documented.
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: SDK version and node version
+      description: The SDK release you use and the node it talks to (`GET /api/v1/info/version`, or `SPEC_VERSION` in the repo).
+      placeholder: "sdk 0.1.1, node 0.1.7"
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you called, what you expected, what you got. Paste the error text as-is.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: The smallest snippet that shows it. Against the local dev net or a public node; never include a real private key or recovery phrase.
+      render: text
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: I ran the repo's unit tests (they pass on main) and the conformance vectors check.
+        - label: The snippet above contains no secret.

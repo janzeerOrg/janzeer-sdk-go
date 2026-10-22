@@ -1,0 +1,22 @@
+name: Change or addition
+description: A missing wrapper, a new example, a doc page, or an API change you want to propose.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What you need and why
+      description: The node method, flow or document it concerns, and what you would do with it.
+    validations:
+      required: true
+  - type: textarea
+    id: shape
+    attributes:
+      label: Proposed shape
+      description: The signature or the page outline you have in mind. The other SDKs are the reference — the same thing should look the same in all five.
+  - type: checkboxes
+    id: pr
+    attributes:
+      label: Pull request
+      options:
+        - label: I would like to implement this myself.
