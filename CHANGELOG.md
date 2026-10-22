@@ -3,14 +3,10 @@
 All notable changes to this module. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and the module follows [Semantic Versioning](https://semver.org/).
 
-## Unreleased
-
-### Added
+## Unreleased (0.1.0) — 2026-10-01
 
 - `examples/watchblocks`: a `SubscribeNewBlocks` example that prints each finalized block's height, hash and
   transaction count.
-
-## 0.1.0 — 2026-10-01
 
 First version, for node 0.1.0 (API 1.1.0, protocol 3.4.0).
 
