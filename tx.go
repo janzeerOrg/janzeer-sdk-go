@@ -116,7 +116,7 @@ type Common struct {
 	Fee string
 	// Timestamp in ms since epoch; defaults to now.
 	Timestamp int64
-	// NetworkID defaults to NetworkID ("janzeer"); pass the node's id when working on a testnet.
+	// NetworkID defaults to NetworkID ("janzeer"); pass the node's id when working on a private test network.
 	NetworkID string
 }
 
