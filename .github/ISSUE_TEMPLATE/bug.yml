@@ -7,7 +7,7 @@ body:
     attributes:
       label: SDK version and node version
       description: The SDK release you use and the node it talks to (`GET /api/v1/info/version`, or `SPEC_VERSION` in the repo).
-      placeholder: "sdk 0.1.1, node 0.1.7"
+      placeholder: "sdk 0.1.1, node 0.1.8"
     validations:
       required: true
   - type: textarea
