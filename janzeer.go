@@ -36,7 +36,7 @@ const (
 
 // The node, API and wire-protocol versions this SDK release was built and tested against.
 const (
-	SpecNode     = "0.1.8"
+	SpecNode     = "0.1.9"
 	SpecAPI      = "1.1.0"
 	SpecProtocol = "3.4.0"
 	SpecVectors  = 2
