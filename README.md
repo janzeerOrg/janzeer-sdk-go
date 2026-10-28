@@ -8,11 +8,11 @@ subscriptions. Non-custodial by construction: keys never leave your process, the
 [![Go Reference](https://pkg.go.dev/badge/github.com/janzeerorg/janzeer-sdk-go.svg)](https://pkg.go.dev/github.com/janzeerorg/janzeer-sdk-go)
 
 ```bash
-go get github.com/janzeerorg/janzeer-sdk-go@master
+go get github.com/janzeerorg/janzeer-sdk-go@v0.1.0
 ```
 
-> **No tagged release yet.** `v0.1.0` follows shortly after the mainnet launch; until then `@master` pins the
-> current commit.
+Releases are Git tags (`vX.Y.Z`); the Go module proxy and [pkg.go.dev](https://pkg.go.dev/github.com/janzeerorg/janzeer-sdk-go) index
+them directly. `@master` gives the development head.
 
 ## 60-second quickstart
 
