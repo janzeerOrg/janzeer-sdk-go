@@ -3,6 +3,11 @@
 All notable changes to this module. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and the module follows [Semantic Versioning](https://semver.org/).
 
+## 0.1.1 — 2026-11-01
+
+No API change. `SpecNode` is **0.1.11** (node maintenance release: the `jz` command-line client ships in the node bundle;
+`GET /info/version` now returns `version`, `apiVersion` and `protocolVersion` like `/info`; API 1.1.0 / protocol 3.4.0 unchanged).
+
 ## 0.1.0 — 2026-10-28
 
 - `examples/watchblocks`: a `SubscribeNewBlocks` example that prints each finalized block's height, hash and

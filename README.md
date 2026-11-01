@@ -8,7 +8,7 @@ subscriptions. Non-custodial by construction: keys never leave your process, the
 [![Go Reference](https://pkg.go.dev/badge/github.com/janzeerorg/janzeer-sdk-go.svg)](https://pkg.go.dev/github.com/janzeerorg/janzeer-sdk-go)
 
 ```bash
-go get github.com/janzeerorg/janzeer-sdk-go@v0.1.0
+go get github.com/janzeerorg/janzeer-sdk-go@v0.1.1
 ```
 
 Releases are Git tags (`vX.Y.Z`); the Go module proxy and [pkg.go.dev](https://pkg.go.dev/github.com/janzeerorg/janzeer-sdk-go) index
