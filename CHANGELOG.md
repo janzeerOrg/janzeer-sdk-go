@@ -3,6 +3,13 @@
 All notable changes to this module. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and the module follows [Semantic Versioning](https://semver.org/).
 
+## 0.1.2 — 2026-11-09
+
+No API change. `SpecNode` is **0.1.12** (node critical fix F-058: GraalVM native nodes could not sync across a block carrying a token transaction, fixed in 0.1.12 with a build-time guard; API 1.1.0 / protocol 3.4.0 unchanged).
+
+- README: install with `go get github.com/janzeerorg/janzeer-sdk-go/...@v0.1.2` (or `go mod tidy` after importing) — `go get` of
+  the root module alone leaves the `client` package's WebSocket dependency out of `go.sum`, and the first `go run` fails.
+
 ## 0.1.1 — 2026-11-01
 
 No API change. `SpecNode` is **0.1.11** (node maintenance release: the `jz` command-line client ships in the node bundle;

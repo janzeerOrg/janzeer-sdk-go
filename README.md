@@ -8,8 +8,12 @@ subscriptions. Non-custodial by construction: keys never leave your process, the
 [![Go Reference](https://pkg.go.dev/badge/github.com/janzeerorg/janzeer-sdk-go.svg)](https://pkg.go.dev/github.com/janzeerorg/janzeer-sdk-go)
 
 ```bash
-go get github.com/janzeerorg/janzeer-sdk-go@v0.1.1
+go get github.com/janzeerorg/janzeer-sdk-go/...@v0.1.2
 ```
+
+The `/...` form fetches the sub-packages (`client`, `rpc`, `vault`) and their dependencies in one go. If you `go get` the root
+module alone, run `go mod tidy` after adding the imports — otherwise the first `go run` stops on a missing `go.sum` entry for the
+WebSocket library the `client` package uses.
 
 Releases are Git tags (`vX.Y.Z`); the Go module proxy and [pkg.go.dev](https://pkg.go.dev/github.com/janzeerorg/janzeer-sdk-go) index
 them directly. `@master` gives the development head.
@@ -93,7 +97,7 @@ Go 1.26 or newer (the two latest Go releases are tested).
 
 | SDK | Node | REST envelope `version` | Wire protocol | Vectors |
 |---|---|---|---|---|
-| 0.1.x | 0.1.11 | 1.1.0 | 3.4.0 | v2 |
+| 0.1.x | 0.1.12 | 1.1.0 | 3.4.0 | v2 |
 
 The `Spec…` constants export these values; the e2e test checks them against the node on the first call.
 
