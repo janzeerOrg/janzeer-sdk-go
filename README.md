@@ -8,7 +8,7 @@ subscriptions. Non-custodial by construction: keys never leave your process, the
 [![Go Reference](https://pkg.go.dev/badge/github.com/janzeerorg/janzeer-sdk-go.svg)](https://pkg.go.dev/github.com/janzeerorg/janzeer-sdk-go)
 
 ```bash
-go get github.com/janzeerorg/janzeer-sdk-go/...@v0.1.2
+go get github.com/janzeerorg/janzeer-sdk-go/...@v0.1.3
 ```
 
 The `/...` form fetches the sub-packages (`client`, `rpc`, `vault`) and their dependencies in one go. If you `go get` the root

@@ -292,6 +292,12 @@ func (c *Client) WaitForFinality(ctx context.Context, hash string, poll time.Dur
 				if ctx.Err() != nil {
 					return nil, &janzeer.FinalityTimeoutError{Hash: hash}
 				}
+				// The transaction was already accepted: a transport failure on one poll is retried until ctx ends, so
+				// it never surfaces as what looks like a failed send.
+				var ne *janzeer.NetworkError
+				if errors.As(err, &ne) {
+					break
+				}
 				return nil, err
 			}
 			if t != nil {

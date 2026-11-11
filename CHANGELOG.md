@@ -3,6 +3,14 @@
 All notable changes to this module. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and the module follows [Semantic Versioning](https://semver.org/).
 
+## 0.1.3 — 2026-11-11
+
+Reliability fixes from a code review. Node pin unchanged (**0.1.12**, API 1.1.0 / protocol 3.4.0). No API change.
+
+- **`client.WaitForFinality` over REST survives a dropped poll.** One transport error while polling (the transaction was already accepted) used to surface as a network error — which a caller can mistake for a failed send and resend. The REST branch now retries until the deadline, like the JSON-RPC branch.
+- **WebSocket, resume after a reconnect.** A `newBlocks` stream now resumes right after the last block it delivered. It used to re-send the original `fromHeight`, so the node replayed every block again (thousands of duplicates on a long-lived stream), and a stream without `fromHeight` silently skipped the blocks committed during the outage. Blocks are delivered exactly once by height.
+- **WebSocket, a failed resubscribe is retried.** A subscription whose re-creation failed (the socket dropped again, a call timed out) was removed for good with an `"error"` event as the only trace. It now stays registered and is re-created on the next attempt.
+
 ## 0.1.2 — 2026-11-09
 
 No API change. `SpecNode` is **0.1.12** (node critical fix F-058: GraalVM native nodes could not sync across a block carrying a token transaction, fixed in 0.1.12 with a build-time guard; API 1.1.0 / protocol 3.4.0 unchanged).

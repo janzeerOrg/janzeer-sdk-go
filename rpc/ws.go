@@ -48,6 +48,11 @@ type Subscription struct {
 	kind    string
 	params  any
 	handler func(json.RawMessage)
+	// newBlocks only: the height of the last block handed to the handler — where a resubscribe resumes (guarded by mu)
+	lastHeight int64
+	hasHeight  bool
+	// stale: the server-side subscription must be re-created (set on reconnect, cleared when the call succeeds; guarded by WS.mu)
+	stale bool
 }
 
 // ID is the node's current subscription id.
@@ -89,6 +94,8 @@ type WS struct {
 	subs   map[string]*Subscription
 	closed bool
 	id     atomic.Int64
+	// resubMu serializes resubscribe passes (a retry and a fresh reconnect must not both re-create a subscription).
+	resubMu sync.Mutex
 }
 
 // NormalizeWSURL rewrites an http(s) origin, an /api/v1 base or a /rpc URL to ws(s)://…/rpc/ws.
@@ -192,25 +199,44 @@ func (w *WS) reconnect() {
 			w.emit("error", err)
 			continue
 		}
+		w.mu.Lock()
+		for _, s := range w.subs {
+			s.stale = true // the server forgot them with the old socket
+		}
+		w.mu.Unlock()
 		w.resubscribe()
 		return
 	}
 }
 
+// resubscribe re-creates every stale subscription. One that fails stays registered (and stale) and is tried again — it
+// used to be dropped for good, with an "error" event as the only trace. Passes are serialized: a retry and a fresh
+// reconnect must not both re-create the same subscription.
 func (w *WS) resubscribe() {
+	w.resubMu.Lock()
+	defer w.resubMu.Unlock()
 	w.mu.Lock()
 	old := make([]*Subscription, 0, len(w.subs))
 	for _, s := range w.subs {
-		old = append(old, s)
+		if s.stale {
+			old = append(old, s)
+		}
 	}
-	w.subs = map[string]*Subscription{}
 	w.mu.Unlock()
-	count := 0
+	count, failed := 0, 0
 	for _, s := range old {
+		oldID := s.ID()
+		w.mu.Lock()
+		live := s.stale && w.subs[oldID] == s // unsubscribed meanwhile?
+		w.mu.Unlock()
+		if !live {
+			continue
+		}
 		ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-		err := w.call(ctx, "janzeer_subscribe", map[string]any{"kind": s.kind, "params": s.params}, nil, w.register(s))
+		err := w.call(ctx, "janzeer_subscribe", map[string]any{"kind": s.kind, "params": s.resumeParams()}, nil, w.reregister(s, oldID))
 		cancel()
 		if err != nil {
+			failed++
 			w.emit("error", err)
 			continue
 		}
@@ -219,6 +245,52 @@ func (w *WS) resubscribe() {
 	if count > 0 {
 		w.emit("resubscribed", nil)
 	}
+	if failed > 0 {
+		// still connected: try the rest again shortly (a new reconnect marks everything stale and runs this anyway)
+		go func() {
+			time.Sleep(2 * time.Second)
+			w.mu.Lock()
+			ok := !w.closed && w.conn != nil
+			w.mu.Unlock()
+			if ok {
+				w.resubscribe()
+			}
+		}()
+	}
+}
+
+// resumeParams: a newBlocks stream resumes right after the last block it delivered — the original FromHeight would
+// replay every block again, and without one the blocks committed during the outage would be skipped.
+func (s *Subscription) resumeParams() any {
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	p, ok := s.params.(NewBlocksParams)
+	if s.kind != "newBlocks" || !s.hasHeight || !ok {
+		return s.params
+	}
+	next := s.lastHeight + 1
+	p.FromHeight = &next
+	return p
+}
+
+// seen reports whether a newBlocks notification is a replay overlap (height already delivered) and records the height.
+func (s *Subscription) seen(raw json.RawMessage) bool {
+	if s.kind != "newBlocks" {
+		return false
+	}
+	var b struct {
+		Height *int64 `json:"height"`
+	}
+	if json.Unmarshal(raw, &b) != nil || b.Height == nil {
+		return false
+	}
+	s.mu.Lock()
+	defer s.mu.Unlock()
+	if s.hasHeight && *b.Height <= s.lastHeight {
+		return true
+	}
+	s.lastHeight, s.hasHeight = *b.Height, true
+	return false
 }
 
 func (w *WS) dispatch(data []byte) {
@@ -246,7 +318,7 @@ func (w *WS) dispatch(data []byte) {
 			w.mu.Lock()
 			sub := w.subs[m.Params.Subscription]
 			w.mu.Unlock()
-			if sub != nil && m.Params.Result != nil {
+			if sub != nil && m.Params.Result != nil && !sub.seen(m.Params.Result) {
 				sub.handler(m.Params.Result)
 			}
 			continue
@@ -339,6 +411,22 @@ func (w *WS) register(s *Subscription) func(*response) {
 		s.id = id
 		s.mu.Unlock()
 		w.subs[id] = s
+	}
+}
+
+// reregister is register for a resubscribe: the entry under the old id goes away in the same step.
+func (w *WS) reregister(s *Subscription, oldID string) func(*response) {
+	reg := w.register(s)
+	return func(res *response) {
+		var id string
+		if res.Error != nil || json.Unmarshal(res.Result, &id) != nil || id == "" {
+			return
+		}
+		if w.subs[oldID] == s {
+			delete(w.subs, oldID)
+		}
+		s.stale = false
+		reg(res)
 	}
 }
 
