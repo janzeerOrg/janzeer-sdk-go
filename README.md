@@ -8,7 +8,7 @@ subscriptions. Non-custodial by construction: keys never leave your process, the
 [![Go Reference](https://pkg.go.dev/badge/github.com/janzeerorg/janzeer-sdk-go.svg)](https://pkg.go.dev/github.com/janzeerorg/janzeer-sdk-go)
 
 ```bash
-go get github.com/janzeerorg/janzeer-sdk-go/...@v0.1.3
+go get github.com/janzeerorg/janzeer-sdk-go/...@v0.1.4
 ```
 
 The `/...` form fetches the sub-packages (`client`, `rpc`, `vault`) and their dependencies in one go. If you `go get` the root
@@ -97,7 +97,7 @@ Go 1.26 or newer (the two latest Go releases are tested).
 
 | SDK | Node | REST envelope `version` | Wire protocol | Vectors |
 |---|---|---|---|---|
-| 0.1.x | 0.1.12 | 1.1.0 | 3.4.0 | v2 |
+| 0.1.x | 0.1.13 | 1.1.0 | 3.4.0 | v2 |
 
 The `Spec…` constants export these values; the e2e test checks them against the node on the first call.
 
