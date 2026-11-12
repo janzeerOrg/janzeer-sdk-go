@@ -35,3 +35,7 @@ Against any other network set `JANZEER_NODE_URL`, `JANZEER_RPC_URL`, `JANZEER_WS
   does not order a variable read against a call inside one `return` statement.
 - Every new node method gets a wrapper in `rpc` or `client`, a test against `httptest`, and a line in `CHANGELOG.md`.
 - Public API says *validator*; the node's internal word *promoter* does not appear in it.
+
+## Bounties
+
+Some issues carry a bounty paid in JNZ: see [BOUNTIES.md](BOUNTIES.md).
