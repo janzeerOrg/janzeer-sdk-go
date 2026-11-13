@@ -28,6 +28,8 @@ Security problems: please do not open a public issue. Write to <info@janzeer.org
 ## Rules
 
 - The first pull request that is merged for an issue receives its bounty.
+- Nothing needs to be agreed beforehand: the amount and the acceptance list are in the issue. A comment saying you are
+  taking an issue holds it for 7 days; after that, without a pull request, anyone else may take it.
 - One bounty at a time per person.
 - The project may decline a pull request that does not meet the issue's acceptance list, and will say why.
 - The programme pays at most 1,000 JNZ a month; when that is reached, further bounties are paid the month after.
