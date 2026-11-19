@@ -3,6 +3,10 @@
 All notable changes to this module. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and the module follows [Semantic Versioning](https://semver.org/).
 
+## Unreleased
+
+- **New example `examples/offline`**: sign a transfer offline and broadcast it later — read the network id and nonce online, sign with the key offline, then send the signed body with `SendRawTransaction` and check the returned hash against the one computed offline.
+
 ## 0.1.6 — 2026-11-15
 
 - **Typed JSON-RPC wrappers on `rpc.Methods`** for the methods that needed the raw `Call`: `GetToken`, `ListTokens`, `GetTokenBalances`, `GetTokenHolders` (new models `TokenView` and `TokenBalance`; token amounts are integer token units as `*big.Int`, not JNZ), `GetTransactionsByAddress` (`AddressTransactions`: page + pending), `SendRawTransaction`, `ListMethods` (`RPCMethodSpec`) and `GetGenesis` (the genesis document as `json.RawMessage`, like `client.Genesis`). Contributed by @genda-benjamin (#4).

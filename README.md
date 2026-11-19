@@ -104,7 +104,7 @@ The `Spec…` constants export these values; the e2e test checks them against th
 ## Examples
 
 Runnable programs in [`examples/`](examples): `go run ./examples/quickstart` and its siblings `subscribe`,
-`watchblocks`, `token`, `validator`, `vault`. They read the `JANZEER_*` environment variables described in
+`watchblocks`, `token`, `validator`, `vault`, `offline`. They read the `JANZEER_*` environment variables described in
 [CONTRIBUTING](CONTRIBUTING.md).
 
 ## Conformance
