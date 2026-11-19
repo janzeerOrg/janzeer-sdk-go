@@ -3,9 +3,9 @@
 All notable changes to this module. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and the module follows [Semantic Versioning](https://semver.org/).
 
-## Unreleased
+## 0.1.7 — 2026-11-19
 
-- **New example `examples/offline`**: sign a transfer offline and broadcast it later — read the network id and nonce online, sign with the key offline, then send the signed body with `SendRawTransaction` and check the returned hash against the one computed offline.
+- **New example `examples/offline`**: sign a transfer offline and broadcast it later — read the network id and nonce online, sign with the key offline, then send the signed body with `SendRawTransaction` and check the returned hash against the one computed offline. Contributed by @boxi-rgb (#6, #8). No library change.
 
 ## 0.1.6 — 2026-11-15
 
