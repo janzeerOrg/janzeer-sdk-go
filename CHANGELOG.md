@@ -3,6 +3,12 @@
 All notable changes to this module. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/)
 and the module follows [Semantic Versioning](https://semver.org/).
 
+## 0.1.8 — 2026-11-25
+
+Verified against node **0.1.15** (API 1.1.0 / protocol 3.4.0). No library change.
+
+- `SpecNode` is **0.1.15** (node 0.1.15: consensus safety release, vote lock active from block #357,023; API 1.1.0 unchanged, wire protocol 3.4.0 until that block and 3.5.0 from it. The SDK speaks HTTP only, so nothing changes for applications).
+
 ## 0.1.7 — 2026-11-19
 
 - **New example `examples/offline`**: sign a transfer offline and broadcast it later — read the network id and nonce online, sign with the key offline, then send the signed body with `SendRawTransaction` and check the returned hash against the one computed offline. Contributed by @boxi-rgb (#6, #8). No library change.
